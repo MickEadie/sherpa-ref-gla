@@ -1,0 +1,84 @@
+<!doctype html>
+<head>
+  	<meta charset="utf-8">
+  	<title>REF using Acceptance Date</title>
+  	<meta name="description" content="Alternative Sherpa REF Tool">
+  	<meta name="author" content="University of Glasgow">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="stylesheet" type="text/css" href="styles/style1.css" />
+	<link href='https://fonts.googleapis.com/css?family=Hind:600' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+
+	<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+	<script src="easy-autocomplete/EasyAutocomplete-1.3.4/dist/jquery.easy-autocomplete.min.js"></script>
+	<link rel="stylesheet" href="easy-autocomplete/EasyAutocomplete-1.3.4/dist/easy-autocomplete.min.css">
+
+	<script>
+		$(function() {
+		$( "#journal" ).easyAutocomplete({
+			url: function(phrase) { return ( 'http://ref.sherpa.ac.uk/search/journal/' + phrase );  },
+			ajaxSettings: {
+				dataType: "jsonp"
+			},
+			getValue: 'string',
+			list: {
+				maxNumberOfElements: 15,
+				onChooseEvent: function(){
+					$("#issn").val($("#journal").getSelectedItemData().issn);
+				}
+			}
+		});
+	});
+	</script>
+	<script src="js/utils.js"></script>
+</head>
+<body>
+
+<header>
+<h1 style="float:left">REF Acceptance Date</h1>
+	<nav>
+		<ul>
+			<li><a href="index.html"><strong>Home</strong></a></li>
+			<li><a href=""><strong>About</strong></a></li>
+		</ul>
+	</nav>
+	<div style="clear:both"></div>
+</header>
+
+<section id="content-wrapper">
+	<section id="content-main">
+		<section id="intro-text">
+			<p>This is where you can check your Journal to see if it complies with REF Open Access requirements.</p>
+			<p>Using Data provided by <a href="https://ref.sherpa.ac.uk/">Sherpa REF</a>.</p>
+		</section> <!-- /intro-text -->
+			<form id="form" action='result.php'>
+				<h2>Check your Journal</h2>
+					<ul>
+						<li>
+							<label for='journal'>Journal Name or ISSN</label>
+							<input type="text" placeholder="(Enter your journal name or ISSN and select from the list)" name="journal" id="journal" required />
+						</li>
+						<li>
+							<input type="radio" id="panelAB" name="pn" value='AB' required />
+								<p>REF Main Panels A and B (Sciences, Technology and Medicine)</p>
+
+							<input type="radio" id="panelCD" name='pn' value='CD' required />
+								<p>REF Main Panels C and D (Arts, Humanities, and Social Sciences)</p>
+						</li>
+							<input type="hidden" id="issn" name='issn' value='none'/>
+					</ul>
+
+					<div id="formButtons">
+						<input type="submit" id="submit" name="submit" value="Check Journal" />
+						<input type="reset" id="clear" name="clear" value="Clear Form" />
+					</div>
+					<div style="clear:both"></div>
+			</form>
+	</section> <!-- /main -->
+</section> <!-- /wrapper -->
+<footer>
+	<div id="clockbox"></div>
+</footer>
+</body>
+</html>
